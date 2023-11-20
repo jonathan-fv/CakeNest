@@ -1,14 +1,14 @@
 import React from 'react'
-import Form from './components/Form'
+import LoginPage from './components/pages/login/LoginPage'
+
+
 
 function App() {
 
 
   return (
-      <div>
-        <h1>bienvenue chez nous !</h1>
-        <h2>Connectez vous</h2>
-        <Form/>
+    <div>
+      <LoginPage/>
     </div>
   )
 }

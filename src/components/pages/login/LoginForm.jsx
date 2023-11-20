@@ -1,8 +1,7 @@
 import React from 'react'
 import { useState } from "react"
 
-function Form() {
-
+function LoginForm() {
     const [value, setValue] = useState("")
 
     const handleSubmit = (event) => {
@@ -14,17 +13,16 @@ function Form() {
             alert('Bonjour ' + value)
             setValue("")
         }
-        
     }
 
     const handleChange = (event) => {
         const valueAfterChange = event.target.value
         setValue(valueAfterChange)
     }
-
-
     return (
         <div>
+            <h1>bienvenue chez nous !</h1>
+            <h2>Connectez vous</h2>
             <form action="submit" onSubmit={handleSubmit}>
                 <input
                 type='text'
@@ -38,4 +36,4 @@ function Form() {
     )
 }
 
-export default Form
+export default LoginForm
