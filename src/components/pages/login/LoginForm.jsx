@@ -1,164 +1,68 @@
-import { useState } from "react"
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { IoChevronForward } from "react-icons/io5";
 import styled from "styled-components";
+import TextInput from "../../reusable-ui/TextInput";
+import { BsPersonCircle } from "react-icons/bs";
+import PrimaryButton from "../../reusable-ui/PrimaryButton";
 import { theme } from "../../theme";
-import cupcake from "../../../assets/images/cupcake.png"
-import bg from "../../../assets/images/tarts.jpg"
-import { PiUserCircleFill } from "react-icons/pi";
-import { FaChevronRight } from "react-icons/fa";
 
-
-function LoginForm() {
-    const [value, setValue] = useState("")
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (value == ""){
-            alert("Le champ Prénom est obligatoire")
-        }
-        else{
-            navigate("/order", {state:{name:value}});
-            
-            setValue("")
-        }
-    }
-
-    const handleChange = (event) => {
-        const valueAfterChange = event.target.value
-        setValue(valueAfterChange)
-    }
-
+export default function LoginForm() {
+    const [inputValue, setInputValue] = useState("");
     const navigate = useNavigate();
 
-    const Container = styled.div`
-        background-image: url(${bg});
-        width: 100wh;
-        height: 100vh;
-    `;
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setInputValue("");
+        navigate(`/order/${inputValue}`);
+    };
 
-    const Opacity = styled.div`
-        background-color: rgba(0,0,0, .6);
-        width: 100wh;
-        height: 100vh;
-    `;
-
-    const BoxTitle = styled.div`
-        display : flex;
-        justify-content: center;
-        align-items: center;
-    `;
-    const Title = styled.p`
-        text-transform : uppercase;
-        color : ${theme.colors.primary};
-        text-align : center;
-        margin-top : ${theme.spacing.xxl};
-        margin-bottom : ${theme.spacing.xxl};
-        font-size : ${theme.fonts.size.P6};
-        padding-left : 5px;
-        padding-right : 5px;
-        font-family: 'Open Sans';
-        letter-spacing : ${theme.spacing.xs}
-    `;
-
-    const SubTitle = styled.h2`
-        font-family: "Pacifico";
-        text-align : center;
-        color : ${theme.colors.white};
-        margin : ${theme.spacing.xl};
-        font-size : ${theme.fonts.size.P6};
-    `;
-    const BoxColor = styled.div`
-        width: 40%;
-        height : 2px;
-        background-color: ${theme.colors.primary};
-        margin: 0 auto;
-        opacity: 0.7
-    `;
-    const Paragraph = styled.p`
-        font-family: "Pacifico";
-        text-align : center;
-        color : ${theme.colors.white};
-        margin : ${theme.spacing.xxl};
-        font-size : ${theme.fonts.size.P4};
-    `;
-
-    const BoxForm = styled.div`
-        display: flex;
-        justify-content: center;
-        margin: 0 auto;
-    `;
-
-    const Form = styled.div`
-        display: flex;
-        flex-direction : column;
-        gap: 20px;
-    `;
-
-    const BoxInput = styled.div`
-        position: relative;
-    `;
-    const Input = styled.input`
-        width: 550px;
-        padding: 35px 0 35px 50px;
-        font-family: 'Open Sans';
-    `;
-
-    const Icone = styled.div`
-        position: absolute;
-        background-color: ${theme.colors.white};
-        top: 50%;
-        transform : translateY(-50%);
-        left: 10px;
-        font-size: 30px;
-        color : ${theme.colors.greySemiDark};
-    `;
-
-    const BtnColor = styled.button`
-        height: 70px;
-        background-color: ${theme.colors.primary};
-        border : none;
-        color : white;
-        font-family: 'Open Sans';
-        font-size : ${theme.fonts.size.P3};
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight : ${theme.fonts.weights.semiBold}
-    `;
-
+    const handlechange = (e) => {
+        setInputValue(e.target.value);
+    };
 
     return (
-        <Container>
-            <Opacity>
-                <BoxTitle>
-                    <Title>cake</Title> 
-                    <img src={cupcake} style={{width: 90}}></img>
-                    <Title>nest</Title>
-                </BoxTitle>
-                
-                <SubTitle>Bienvenue chez nous !</SubTitle>
-                <BoxColor></BoxColor>
-                <Paragraph>Connectez vous</Paragraph>
-                <BoxForm>
-                    <Form action="submit" onSubmit={handleSubmit}>
-                        <BoxInput>
-                            <Icone>
-                                <PiUserCircleFill />
-                            </Icone>
-                            <Input
-                            type='text'
-                            placeholder= "Entrer votre prémon"
-                            onChange = {handleChange}
-                            value={value}
-                            ></Input>
-                        </BoxInput>
-                        <BtnColor><span style={{paddingRight:10}}>Mon espace</span><FaChevronRight /></BtnColor>
-                        </Form>
-                </BoxForm>
-                
-            </Opacity>
-        </Container>
-    )
+        <LoginFormStyled onSubmit={handleSubmit}>
+            <h1>Bienvenue chez nous !</h1>
+            <hr />
+            <h2>Connectez-vous</h2>
+            <TextInput value={inputValue} onChange={handlechange} placeholder={"Entrez votre prénom"} required Icon={<BsPersonCircle className="icon" />} />
+
+            <PrimaryButton Icon={<IoChevronForward className="icon"/>} label={"Mon espace"}/>
+        </LoginFormStyled>
+    );
 }
 
-export default LoginForm
+const LoginFormStyled = styled.form`
+    text-align: center;
+    max-width: 500px;
+    min-width: 400px;
+    margin: 0px auto;
+    padding: 40px ${theme.spacing.lg};
+    border-radius: ${theme.borderRadius.round};
+    font-family: "Pacifico", sans-serif;
+
+    hr {
+        border: 1.5px solid ${theme.colors.loginLine};
+        margin-bottom: ${theme.gridUnit * 5}px;
+    }
+
+    h1 {
+        color: ${theme.colors.white};
+        font-size: ${theme.fonts.size.P5};
+    }
+
+    h2 {
+        margin: 20px 10px 10px;
+        color: ${theme.colors.white};
+        font-size: ${theme.fonts.size.P4};
+    }
+
+    .icon {
+        vertical-align: middle;
+        justify-content: center;
+        align-items: center;
+        font-size: ${theme.fonts.size.P0};
+        margin-left: 10px;
+    }
+`;
