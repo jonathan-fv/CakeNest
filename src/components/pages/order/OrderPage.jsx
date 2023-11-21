@@ -1,22 +1,16 @@
-import { useLocation, useNavigate } from 'react-router-dom'
-import styled from 'styled-components';
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 
-function OrderPage() {
-    const location = useLocation()
-    const {name} = location.state
-    
-    const navigate = useNavigate();
+export default function OrderPage(props) {
+    const {username} = useParams();
 
-    const handleLogOut = () => {
-        navigate('/')
-    }
     return (
         <div>
-            <h1>Bonjour {name}</h1>
-            <button onClick={handleLogOut}>Déconnexion</button>
+            <h1>Bonjour {username}</h1>
+            <Link to={"/"}>
+                <button>Déconnexion</button>
+            </Link>
         </div>
-    )
+    );
 }
-
-export default OrderPage
