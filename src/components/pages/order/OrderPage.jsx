@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
+import styled from 'styled-components';
 
 
 function OrderPage() {
@@ -12,8 +13,8 @@ function OrderPage() {
     }
     return (
         <div>
-        <h1>Bonjour {name}</h1>
-        <button onClick={handleLogOut}>Déconnexion</button>
+            <h1>Bonjour {name}</h1>
+            <button onClick={handleLogOut}>Déconnexion</button>
         </div>
     )
 }
