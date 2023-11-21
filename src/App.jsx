@@ -1,15 +1,12 @@
 import React from 'react'
-import LoginPage from './components/pages/login/LoginPage'
+import MainRoute from './Routes'
+
 
 
 
 function App() {
-
-
   return (
-    <div>
-      <LoginPage/>
-    </div>
+    <MainRoute />
   )
 }
 

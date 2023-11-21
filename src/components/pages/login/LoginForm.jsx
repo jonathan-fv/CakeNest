@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
     const [value, setValue] = useState("")
@@ -10,7 +11,8 @@ function LoginForm() {
             alert("Le champ Prénom est obligatoire")
         }
         else{
-            alert('Bonjour ' + value)
+            navigate("/order", {state:{name:value}});
+            
             setValue("")
         }
     }
@@ -19,6 +21,9 @@ function LoginForm() {
         const valueAfterChange = event.target.value
         setValue(valueAfterChange)
     }
+
+    const navigate = useNavigate();
+
     return (
         <div>
             <h1>bienvenue chez nous !</h1>
