@@ -1,8 +1,7 @@
-import React from 'react'
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 
-function Form() {
-
+function LoginForm() {
     const [value, setValue] = useState("")
 
     const handleSubmit = (event) => {
@@ -11,10 +10,10 @@ function Form() {
             alert("Le champ Prénom est obligatoire")
         }
         else{
-            alert('Bonjour ' + value)
+            navigate("/order", {state:{name:value}});
+            
             setValue("")
         }
-        
     }
 
     const handleChange = (event) => {
@@ -22,9 +21,12 @@ function Form() {
         setValue(valueAfterChange)
     }
 
+    const navigate = useNavigate();
 
     return (
         <div>
+            <h1>bienvenue chez nous !</h1>
+            <h2>Connectez vous</h2>
             <form action="submit" onSubmit={handleSubmit}>
                 <input
                 type='text'
@@ -38,4 +40,4 @@ function Form() {
     )
 }
 
-export default Form
+export default LoginForm
