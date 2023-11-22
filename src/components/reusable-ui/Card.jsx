@@ -1,77 +1,97 @@
 import styled from "styled-components"
-import { formatPrice } from "../../utils/math"
+import { theme } from "../../theme"
+import PrimaryButton from "./PrimaryButton"
 
-
-
-function Card({data}) {
-    return (
-        <CardStyled>
-            <CardImgStyled>
-                <img src="/images/cupcake-item.png"></img>
-            </CardImgStyled>
-            <CardContentStyled>
-                <p className="cakeName">{data.title}</p>
-            </CardContentStyled>
-            <CardBoxInfo>
-                <p>{formatPrice(data.price)}</p>
-                <button>Ajouter</button>
-            </CardBoxInfo>
-        </CardStyled>
-    )
+export default function Card({ title, imageSource, leftDescription }) {
+  return (
+    <CardStyled className="produit">
+      <div className="image">
+        <img src={imageSource} alt={title} />
+      </div>
+      <div className="text-info">
+        <div className="title">{title}</div>
+        <div className="description">
+          <div className="left-description">{leftDescription}</div>
+          <div className="right-description">
+            <PrimaryButton className="primary-button" label={"Ajouter"} />
+          </div>
+        </div>
+      </div>
+    </CardStyled>
+  )
 }
 
-export default Card
-
 const CardStyled = styled.div`
-    width: 20%;
-    box-shadow: -8px 8px 20px 0px rgb(0 0 0 / 20%);
-    margin: 30px;
-    border-radius: 10px;
-    font-family: "Open Sans";
-    background-color : white;
-`;
+  background: ${theme.colors.white};
+  width: 240px;
+  height: 320px;
+  display: grid;
+  grid-template-rows: 65% 1fr;
+  padding: 20px;
+  padding-bottom: 10px;
+  box-shadow: -8px 8px 20px 0px rgb(0 0 0 / 20%);
+  border-radius: ${theme.borderRadius.extraRound};
 
-const CardImgStyled = styled.div`
-    display: flex;
-    justify-content: center;
-
-    img{
-        width: 100%;
-    }
-`;
-
-const CardContentStyled = styled.div`
-    text-align: left;
-    padding: 0 10px;
-    font-family: "Pacifico", sans-serif;
-    font-size: 20px;
-
-`;
-
-const CardBoxInfo = styled.div`
+  .image {
     width: 100%;
-    display: flex;
-    flex-direction : row;
-    justify-content: space-around;
-    align-items: center;
-    padding-bottom : 25px;
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
 
-    p{
-        color: #67b6b9;
+    img {
+      max-width: 200px;
+      object-fit: contain;
     }
-    button{
-        background-color: #67b6b9;
-        border: none;
-        padding: 10px 30px;
-        color: white;
-        border-radius: 5px;
-        transition: all ease-in-out 0.5s;
-        font-weight : 700;
+  }
+
+  .text-info {
+    display: grid;
+    grid-template-rows: 30% 70%;
+    padding: 5px;
+
+    .title {
+      margin: auto 0;
+      font-size: ${theme.fonts.size.P3};
+      position: relative;
+      bottom: 10px;
+      font-weight: ${theme.fonts.weights.bold};
+      color: ${theme.colors.dark};
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 100%;
+      text-overflow: ellipsis;
+      font-family: "Pacifico", sans-serif;
     }
 
-    button:hover{
-        background-color : white;
-        color : #67b6b9;
-        border: 1px solid #67b6b9;
+    .description {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      .left-description {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        font-weight: ${theme.fonts.weights.medium};
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: ${theme.fonts.weights.medium};
+        color: ${theme.colors.primary};
+      }
+
+      .right-description {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        font-size: ${theme.fonts.size.P1};
+
+        .primary-button {
+          font-size: ${theme.fonts.size.XS};
+          cursor: pointer;
+          padding: 12px;
+        }
+      }
     }
-`;
+  }
+`
