@@ -1,7 +1,7 @@
 import { BsPersonCircle } from "react-icons/bs"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-import { theme } from "../../../theme"
+import { theme } from "../../../../theme"
 
 export default function Profile({ username }) {
   return (
@@ -59,7 +59,6 @@ const ProfileStyled = styled.div`
   }
 
   .picture {
-    /* border: 1px solid red; */
     height: auto;
     display: flex;
     height: 100%;
