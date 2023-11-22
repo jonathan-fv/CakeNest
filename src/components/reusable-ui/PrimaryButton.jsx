@@ -29,7 +29,6 @@ const PrimaryButtonStyled = styled.button`
         color: #63a5aa;
         border: 1px solid #63a5aa;
         transition: all 0.3s ease-in-out;
-        /* transform: scale(1.05); */
     }
     &:active {
         color: white;

@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import { theme } from '../theme';
+import { theme } from '../../theme';
 
 export default function TextInput({ value, onChange, Icon, ...restProps }) {
 
-    
     return (
         <InputStyled>
             {Icon && Icon}
@@ -21,6 +20,7 @@ const InputStyled = styled.div`
         margin: 18px 0;
         padding: 18px 24px;
         white-space: nowrap;
+        width: 100%;
 
     .icon {
         color: ${theme.colors.greySemiDark};
