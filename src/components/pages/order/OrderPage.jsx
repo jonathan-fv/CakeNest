@@ -11,7 +11,7 @@ export default function OrderPage(props) {
         <OrderPageStyled>
             <div className="container">
                 <Navbar username={username}/>
-                <Main/>
+                <Main />
             </div>
         </OrderPageStyled>
     );
