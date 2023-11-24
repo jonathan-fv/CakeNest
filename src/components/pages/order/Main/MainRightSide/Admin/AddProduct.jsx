@@ -5,6 +5,7 @@ import { GiCupcake } from "react-icons/gi";
 import { useContext, useState } from "react";
 import MenuContext from "../../../../../../context/MenuContext";
 import PreviewImage from "../../../../../reusable-ui/PreviewImage";
+import { GrValidate } from "react-icons/gr";
 
 export default function AddProduct() {
 
@@ -13,6 +14,7 @@ export default function AddProduct() {
     const [name, setName] = useState("")
 
     const { menu, setMenu } = useContext(MenuContext)
+    const [showSuccessAdd, setShowSuccessAdd] = useState(false)
 
     const handleChangeImg = (e) => {
         const imageValue = e.target.value
@@ -50,6 +52,12 @@ export default function AddProduct() {
         }
         setMenu([...menu, newProduct])
         resetValue()
+
+        setShowSuccessAdd(true)
+
+        setTimeout(() => {
+            setShowSuccessAdd(false);
+        }, 20000)
     }
 
     return (
@@ -78,6 +86,12 @@ export default function AddProduct() {
                     </div>
                     <div className= "inputBtn">
                         <button>Ajouter un nouveau produit</button>
+                        {showSuccessAdd && (
+                            <div>
+                                <GrValidate />
+                                <p>Ajouté avecc succès</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -124,19 +138,36 @@ const Formulaire = styled.form`
         border-radius: 5px;
     }
 
-        input{
-            border: none;
-            padding: 18px 10px;
-            background-color: lightgray;
-            width: 100%;
-        }
+    .inputBtn{
+        display: flex;
+        flex-direction: row;
+        padding-right: 20px;
+    }
+
+    .inputBtn div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: green;
+    }
+    input{
+        border: none;
+        padding: 18px 10px;
+        background-color: lightgray;
+        width: 100%;
+    }
         
-        button{
-            background-color: #60bd4f;
-            color: white;
-            border-radius: 5px;
-            padding: 10px 15px;
-            border: none;
-        }
+    button{
+        background-color: #60bd4f;
+        color: white;
+        border-radius: 5px;
+        padding: 10px 15px;
+        border: none;
+    }
+
+    .inputBtn p{
+        color: green;
+        padding-left: 15px;
+    }
 `
 

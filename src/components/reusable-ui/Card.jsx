@@ -13,6 +13,7 @@ export default function Card({ id, title, imageSource, leftDescription }) {
 const { isModeAdmin, setIsModeAdmin }  = useContext(OrderContext)
 const {menu, setMenu} = useContext(MenuContext)
 
+
 const deleteProduct = (id) => {
   console.log("Vous avez supprimer l'article " + id)
   setMenu([...menu.filter((item) => item.id !== id)])
