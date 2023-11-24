@@ -1,19 +1,22 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import styled from "styled-components"
 import { fakeMenu2 } from "../../../../../fakeData/fakeMenu"
 import { theme } from "../../../../../theme"
 import { formatPrice } from "../../../../../utils/maths"
 import Card from "../../../../reusable-ui/Card"
+import MenuContext from "../../../../../context/MenuContext"
 
 export default function Menu() {
-  const [menu, setMenu] = useState(fakeMenu2)
 
+  const {menu, setMenu} = useContext(MenuContext)
+  
   return (
     <MenuStyled className="menu">
       {menu.map(({ id, title, imageSource, price }) => {
         return (
           <Card
             key={id}
+            id={id}
             title={title}
             imageSource={imageSource}
             leftDescription={formatPrice(price)}
@@ -34,4 +37,8 @@ const MenuStyled = styled.div`
   justify-items: center;
   box-shadow: 0px 8px 20px 8px rgba(0, 0, 0, 0.2) inset;
   overflow-y: scroll;
+  overflow-y: scroll;
+  &::-webkit-scrollbar{
+    display: none;
+  }
 `

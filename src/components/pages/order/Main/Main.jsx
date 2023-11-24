@@ -22,4 +22,7 @@ const MainStyled = styled.div`
   grid-template-columns: 1fr;
 
   overflow-y: scroll;
+  &::-webkit-scrollbar{
+    display: none;
+  }
 `
