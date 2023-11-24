@@ -70,6 +70,7 @@ const CardStyled = styled.div`
     border-radius: 50%;
     padding: 5px;
     color: white;
+    cursor: pointer;
   }
 
   .image {
@@ -79,7 +80,8 @@ const CardStyled = styled.div`
     margin-bottom: 20px;
 
     img {
-      max-width: 200px;
+      width: 200px;
+      height: 15vh;
       object-fit: contain;
       transition: all ease-in-out .5s;
     }

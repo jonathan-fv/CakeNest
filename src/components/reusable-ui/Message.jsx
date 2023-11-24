@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import OrderContext from '../../context/OrderContext';
 import { useContext } from 'react';
+import { refreshPage } from "../../utils/window"
 
 export default function Message() {
 
@@ -13,7 +14,7 @@ export default function Message() {
             <div>
                 <p>Il n'y a plus de produits disponibles</p>
                 <p>Cliquez ci-dessous pour les réinitialiser</p>
-                <button>Générer de nouveau gateaux</button>
+                <button onClick={() => refreshPage()}>Générer de nouveau gateaux</button>
             </div>
             
         :
