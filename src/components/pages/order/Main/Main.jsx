@@ -1,11 +1,11 @@
 import styled from "styled-components"
 import { theme } from "../../../../theme"
-import Menu from "./Menu"
+import MainRightSide from "./MainRightSide/MainRightSide"
 
 export default function Main() {
   return (
     <MainStyled className="main">
-      <Menu />
+      <MainRightSide />
     </MainStyled>
   )
 }
@@ -22,7 +22,4 @@ const MainStyled = styled.div`
   grid-template-columns: 1fr;
 
   overflow-y: scroll;
-  &::-webkit-scrollbar{
-    display: none
-  }
 `
