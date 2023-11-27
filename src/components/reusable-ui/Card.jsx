@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { theme } from "../../theme"
 import PrimaryButton from "./PrimaryButton"
 import { ImCross } from "react-icons/im";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import OrderContext from "../../context/OrderContext";
 import RemoveButton from "../reusable-ui/RemoveButton"
 import MenuContext from "../../context/MenuContext";
@@ -12,15 +12,23 @@ export default function Card({ id, title, imageSource, leftDescription }) {
 
 const { isModeAdmin, setIsModeAdmin }  = useContext(OrderContext)
 const {menu, setMenu} = useContext(MenuContext)
-
+const { styleDiv, setStyleDiv } = useState()
 
 const deleteProduct = (id) => {
   console.log("Vous avez supprimer l'article " + id)
   setMenu([...menu.filter((item) => item.id !== id)])
 }
 
+  //Fonction pour changer le style au clic
+  const handleChangeColor = () => {
+    setStyleDiv({
+      backgroundColor: 'blue',
+    })
+  }
+
+
   return (
-    <CardStyled>
+    <CardStyled onClick={handleChangeColor}>
       <div className="removeBox">
         { isModeAdmin && 
           <RemoveButton 
