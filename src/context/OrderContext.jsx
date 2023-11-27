@@ -9,4 +9,7 @@ export default createContext({
 
   currentTabSelected: false,
   setCurrentTabSelected: () => {},
+
+  currentCardId: "",
+  setCardActive: () => {},
 })

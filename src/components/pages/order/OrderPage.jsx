@@ -13,6 +13,7 @@ export default function OrderPage() {
     const [isCollapsed, setIsCollapsed] = useState(false)
     const [currentTabSelected, setCurrentTabSelected] = useState("add")
     const [menu, setMenu] = useState(fakeMenu2)
+    const [currentCardId, setCardActive] = useState()
 
     const orderContextValue = {
         isModeAdmin,
@@ -21,6 +22,8 @@ export default function OrderPage() {
         setIsCollapsed,
         currentTabSelected,
         setCurrentTabSelected,
+        currentCardId,
+        setCardActive,
     }
 
     const menuContextValue = {

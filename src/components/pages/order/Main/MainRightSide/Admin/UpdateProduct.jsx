@@ -2,35 +2,48 @@ import styled from "styled-components"
 import { FaEuroSign } from "react-icons/fa";
 import { MdPhotoCamera } from "react-icons/md";
 import { GiCupcake } from "react-icons/gi";
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import MenuContext from "../../../../../../context/MenuContext";
-import PreviewImage from "../../../../../reusable-ui/PreviewImage";
 import { GrValidate } from "react-icons/gr";
+import OrderContext from "../../../../../../context/OrderContext";
 
-export default function AddProduct() {
+export default function UpdateProduct() {
 
+    const { isModeAdmin, setIsModeAdmin, currentCardId, setCardActive }  = useContext(OrderContext)
+    
     const [img, setImageURL] = useState("")
     const [price, setPrice] = useState("")
     const [name, setName] = useState("")
 
     const { menu, setMenu } = useContext(MenuContext)
-    const [showSuccessAdd, setShowSuccessAdd] = useState(false)
 
+    const selectedCardIndex = menu.findIndex(
+        (card) => card.id === currentCardId
+    )
+    const selectedCard = menu.find((card) => card.id === currentCardId)
+
+
+    const [showSuccessAdd, setShowSuccessAdd] = useState(false)
+    
     const handleChangeImg = (e) => {
-        const imageValue = e.target.value
-        setImageURL(imageValue)
-        if(!imageValue || !imageValue.item(0))return 
-        setImageURL(PreviewImage(imageValue))
+        const updatedCard = { ...selectedCard, imageSource: e.target.value };
+        const updatedMenu = [...menu];
+        updatedMenu[selectedCardIndex] = updatedCard;
+        setMenu(updatedMenu);
     }
 
     const handleChangePrice = (e) =>{
-        const priceValue = e.target.value
-        setPrice(priceValue)
+        const updatedCard = { ...selectedCard, price: e.target.value }
+        const updatedMenu = [...menu]
+        updatedMenu[selectedCardIndex] = updatedCard
+        setMenu(updatedMenu)
     }
 
     const handleChangeName = (e) =>{
-        const nameValue = e.target.value
-        setName(nameValue)
+        const updatedCard = { ...selectedCard, title: e.target.value }
+        const updatedMenu = [...menu]
+        updatedMenu[selectedCardIndex] = updatedCard
+        setMenu(updatedMenu)
     }
 
     const resetValue = () => {
@@ -43,13 +56,14 @@ export default function AddProduct() {
         e.preventDefault()
         const newProduct = {
             id: menu.length + 1,
-            imageSource: img,
-            title: name,
-            price: price,
+            imageSource: selectedCard.imageSource,
+            title: selectedCard.title,
+            price: selectedCard.price,
             quantity: 0,
             isAvailable: true,
             isAdvertised: false,
         }
+        
         setMenu([...menu, newProduct])
         resetValue()
 
@@ -57,39 +71,42 @@ export default function AddProduct() {
 
         setTimeout(() => {
             setShowSuccessAdd(false);
-        }, 20000)
+        }, 2000)
     }
 
+
+
     return (
+        selectedCard ?
         <div>
             <Formulaire onSubmit={handleSubmit}>
             <div className="form-group">
                 <div className="imgBox">
                     <div className="img">
-                    {
-                        img ? (<img src={img}/>) : <p>Pas d'image à afficher</p>
-                    }
+                        {
+                            selectedCard.imageSource ? (<img src={selectedCard.imageSource} alt="preview image" />) : (<p>pas d'image à afficher</p>)
+                        }
                     </div>
                 </div>
                 <div className= "inputBox">
                     <div className= "inputDesign">
                         <GiCupcake />
-                        <input type="text" placeholder="Nom de l'article" onChange={handleChangeName}></input>
+                        <input type="text" placeholder="Nom de l'article" onChange={handleChangeName} value={selectedCard.title} autoFocus="true"></input>
                     </div>
                     <div className= "inputDesign">
                         <MdPhotoCamera />
-                        <input type="text" placeholder="Image de l'article" onChange={handleChangeImg}></input>
+                        <input type="text" placeholder="Image de l'article" onChange={handleChangeImg} value={selectedCard.imageSource}></input>
                     </div>
                     <div className= "inputDesign">
                         <FaEuroSign />
-                        <input type="text" placeholder="Prix de l'article" onChange={handleChangePrice}></input>
+                        <input type="text" placeholder="Prix de l'article" onChange={handleChangePrice} value={selectedCard.price}></input>
                     </div>
                     <div className= "inputBtn">
-                        <button>Ajouter un nouveau produit</button>
+                        <button>Modifier le produit</button>
                         {showSuccessAdd && (
                             <div>
                                 <GrValidate />
-                                <p>Ajouté avecc succès</p>
+                                <p>Modifier avecc succès</p>
                             </div>
                         )}
                     </div>
@@ -97,6 +114,10 @@ export default function AddProduct() {
             </div>
             </Formulaire>
         </div>
+        :
+        <UpdateMessage>
+            <p>Cliquer sur un produit pour le modifier</p>
+        </UpdateMessage>
     )
 }
 
@@ -172,5 +193,13 @@ const Formulaire = styled.form`
         color: green;
         padding-left: 15px;
     }
-`
+`;
 
+const UpdateMessage = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 280px;
+    font-family: 'Pacifico';
+    font-size: 35px;
+`;
