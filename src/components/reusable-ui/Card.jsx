@@ -2,33 +2,46 @@ import styled from "styled-components"
 import { theme } from "../../theme"
 import PrimaryButton from "./PrimaryButton"
 import { ImCross } from "react-icons/im";
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import OrderContext from "../../context/OrderContext";
 import RemoveButton from "../reusable-ui/RemoveButton"
 import MenuContext from "../../context/MenuContext";
+import { tabsConfig } from "../pages/order/Main/MainRightSide/Admin/tabsConfig";
 
 
 export default function Card({ id, title, imageSource, leftDescription }) {
 
-const { isModeAdmin, setIsModeAdmin }  = useContext(OrderContext)
+const { isModeAdmin, setIsModeAdmin, currentCardId, setCardActive, isCollapsed, setIsCollapsed, currentTabSelected, setCurrentTabSelected }  = useContext(OrderContext)
 const {menu, setMenu} = useContext(MenuContext)
-const { styleDiv, setStyleDiv } = useState()
+const [isHover , setIsHover]  = useState(false)
+
+
+const selectTab = (tabSelected) => {
+  setIsCollapsed(false)
+  setCurrentTabSelected(tabSelected)
+}
+
+
+const handleClick = (id) =>{
+  if(isModeAdmin){
+    setCardActive(id),
+    selectTab(tabsConfig[1].index)
+  }
+}
+
 
 const deleteProduct = (id) => {
-  console.log("Vous avez supprimer l'article " + id)
   setMenu([...menu.filter((item) => item.id !== id)])
 }
 
-  //Fonction pour changer le style au clic
-  const handleChangeColor = () => {
-    setStyleDiv({
-      backgroundColor: 'blue',
-    })
-  }
-
-
   return (
-    <CardStyled onClick={handleChangeColor}>
+    <CardStyled 
+    $cardActive = {isModeAdmin && currentCardId === id ? "selected" : ""}
+    $isHover = {isModeAdmin && isHover == true ? "hover": ""}
+    onMouseEnter={() => setIsHover(true)}
+    onMouseLeave={() => setIsHover(false)}
+    onClick = {() => handleClick(id)}
+    >
       <div className="removeBox">
         { isModeAdmin && 
           <RemoveButton 
@@ -54,7 +67,11 @@ const deleteProduct = (id) => {
 }
 
 const CardStyled = styled.div`
-  background: ${theme.colors.white};
+  background-color: ${(props) => 
+    props.$cardActive === "selected"
+    ? theme.colors.primary
+    : theme.colors.white
+  };
   width: 240px;
   height: 320px;
   display: flex;
@@ -64,6 +81,12 @@ const CardStyled = styled.div`
   padding-bottom: 10px;
   box-shadow: -8px 8px 20px 0px rgb(0 0 0 / 20%);
   border-radius: ${theme.borderRadius.extraRound};
+  transition: all ease-in-out .5s;
+  transform: ${(props) =>
+    props.$isHover === "hover"
+      ? "scale(1.1)"
+      : ""
+    };
 
   .removeBox{
     display: flex;
@@ -75,10 +98,18 @@ const CardStyled = styled.div`
 
   .cross{
     font-size: 25px;
-    background-color: #67b6b9;
+    background-color:${(props) => 
+      props.$cardActive === "selected"
+      ? theme.colors.white
+      : theme.colors.primary
+    }; 
     border-radius: 50%;
     padding: 5px;
-    color: white;
+    color: ${(props) => 
+      props.$cardActive === "selected"
+      ? theme.colors.primary
+      : theme.colors.white
+    };
     cursor: pointer;
   }
 
@@ -87,17 +118,13 @@ const CardStyled = styled.div`
     height: auto;
     margin-top: 10px;
     margin-bottom: 20px;
-
+  }
     img {
       width: 200px;
       height: 15vh;
       object-fit: contain;
-      transition: all ease-in-out .5s;
     }
-    img:hover{
-      transform: scale(1.3);
-    }
-  }
+    
 
   .text-info {
     display: grid;
@@ -132,7 +159,11 @@ const CardStyled = styled.div`
         overflow: hidden;
         text-overflow: ellipsis;
         font-weight: ${theme.fonts.weights.medium};
-        color: ${theme.colors.primary};
+        color: ${(props) => 
+          props.$cardActive === "selected"
+          ? theme.colors.white
+          : theme.colors.primary
+        };
       }
 
       .right-description {
@@ -143,6 +174,16 @@ const CardStyled = styled.div`
 
         .primary-button {
           font-size: ${theme.fonts.size.XS};
+          background-color: ${(props) => 
+            props.$cardActive === "selected"
+            ? theme.colors.white
+            : theme.colors.primary
+          };
+          color: ${(props) => 
+            props.$cardActive === "selected"
+            ? theme.colors.primary
+            : theme.colors.white
+          };
           cursor: pointer;
           padding: 12px;
         }
