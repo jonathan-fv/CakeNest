@@ -1,10 +1,34 @@
 import styled from "styled-components"
 import { theme } from "../../theme"
 import PrimaryButton from "./PrimaryButton"
+import { ImCross } from "react-icons/im";
+import { useContext } from "react";
+import OrderContext from "../../context/OrderContext";
+import RemoveButton from "../reusable-ui/RemoveButton"
+import MenuContext from "../../context/MenuContext";
 
-export default function Card({ title, imageSource, leftDescription }) {
+
+export default function Card({ id, title, imageSource, leftDescription }) {
+
+const { isModeAdmin, setIsModeAdmin }  = useContext(OrderContext)
+const {menu, setMenu} = useContext(MenuContext)
+
+
+const deleteProduct = (id) => {
+  console.log("Vous avez supprimer l'article " + id)
+  setMenu([...menu.filter((item) => item.id !== id)])
+}
+
   return (
-    <CardStyled className="produit">
+    <CardStyled>
+      <div className="removeBox">
+        { isModeAdmin && 
+          <RemoveButton 
+            icon={<ImCross className="cross"/>}
+            onClick={() => deleteProduct(id)}
+            />
+        }
+      </div>
       <div className="image">
         <img src={imageSource} alt={title} />
       </div>
@@ -25,12 +49,30 @@ const CardStyled = styled.div`
   background: ${theme.colors.white};
   width: 240px;
   height: 320px;
-  display: grid;
-  grid-template-rows: 65% 1fr;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 20px;
   padding-bottom: 10px;
   box-shadow: -8px 8px 20px 0px rgb(0 0 0 / 20%);
   border-radius: ${theme.borderRadius.extraRound};
+
+  .removeBox{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    font-size: 14px;
+    height: 20px;
+  }
+
+  .cross{
+    font-size: 25px;
+    background-color: #67b6b9;
+    border-radius: 50%;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+  }
 
   .image {
     width: 100%;
@@ -39,8 +81,13 @@ const CardStyled = styled.div`
     margin-bottom: 20px;
 
     img {
-      max-width: 200px;
+      width: 200px;
+      height: 15vh;
       object-fit: contain;
+      transition: all ease-in-out .5s;
+    }
+    img:hover{
+      transform: scale(1.3);
     }
   }
 

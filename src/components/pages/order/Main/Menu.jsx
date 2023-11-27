@@ -9,13 +9,14 @@ import { FaChevronUp } from "react-icons/fa6";
 
 export default function Menu() {
   const [menu, setMenu] = useState(fakeMenu2)
-
+ 
   return (
       <MenuStyled className="menu">
       {menu.map(({ id, title, imageSource, price }) => {
         return (
           <Card
             key={id}
+            id={id}
             title={title}
             imageSource={imageSource}
             leftDescription={formatPrice(price)}
@@ -34,4 +35,5 @@ const MenuStyled = styled.div`
   padding: 50px 50px 150px;
   justify-items: center;
   box-shadow: 0px 8px 20px 8px rgba(0, 0, 0, 0.2) inset;
+
 `

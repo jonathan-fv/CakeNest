@@ -4,11 +4,15 @@ import Main from "./Main/Main";
 import { theme } from "../../../theme";
 import { useState } from "react"
 import OrderContext from "../../../context/OrderContext"
+import { fakeMenu2 } from "../../../fakeData/fakeMenu";
+import MenuContext from "../../../context/MenuContext";
+
 
 export default function OrderPage() {
     const [isModeAdmin, setIsModeAdmin] = useState(false)
     const [isCollapsed, setIsCollapsed] = useState(false)
     const [currentTabSelected, setCurrentTabSelected] = useState("add")
+    const [menu, setMenu] = useState(fakeMenu2)
 
     const orderContextValue = {
         isModeAdmin,
@@ -19,14 +23,21 @@ export default function OrderPage() {
         setCurrentTabSelected,
     }
 
+    const menuContextValue = {
+        menu,
+        setMenu
+    }
+
     return (
         <OrderContext.Provider value={orderContextValue}>
-            <OrderPageStyled>
-            <div className="container">
-                <Navbar />
-                <Main />
-            </div>
-            </OrderPageStyled>
+            <MenuContext.Provider value={menuContextValue}>
+                <OrderPageStyled>
+                <div className="container">
+                    <Navbar />
+                    <Main />
+                </div>
+                </OrderPageStyled>
+            </MenuContext.Provider>
         </OrderContext.Provider>
         )
     }
@@ -44,5 +55,6 @@ const OrderPageStyled = styled.div`
         display: flex;
         flex-direction: column;
         border-radius: ${theme.borderRadius.extraRound};
+        
     }
 `;
