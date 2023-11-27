@@ -1,10 +1,12 @@
 import styled from "styled-components"
 import { theme } from "../../../../theme"
 import MainRightSide from "./MainRightSide/MainRightSide"
+import MainLeftSideStyled from "./MainLeftSide/MainLeftSide"
 
 export default function Main() {
   return (
     <MainStyled className="main">
+      <MainLeftSideStyled />
       <MainRightSide />
     </MainStyled>
   )
@@ -19,7 +21,7 @@ const MainStyled = styled.div`
   box-shadow: 0px 8px 20px 8px rgba(0, 0, 0, 0.2) inset;
 
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 3fr;
 
   overflow-y: scroll;
   &::-webkit-scrollbar{
