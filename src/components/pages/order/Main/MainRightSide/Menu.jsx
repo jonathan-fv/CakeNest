@@ -1,8 +1,6 @@
 import { useContext, useState } from "react"
 import styled from "styled-components"
-import { fakeMenu2 } from "../../../../../fakeData/fakeMenu"
 import { theme } from "../../../../../theme"
-import { formatPrice } from "../../../../../utils/maths"
 import Card from "../../../../reusable-ui/Card"
 import MenuContext from "../../../../../context/MenuContext"
 
@@ -19,7 +17,7 @@ export default function Menu() {
             id={id}
             title={title}
             imageSource={imageSource}
-            leftDescription={formatPrice(price)}
+            leftDescription={price}
           />
         )
       })}
