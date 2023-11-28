@@ -9,7 +9,7 @@ import { FaChevronUp } from "react-icons/fa6";
 
 export default function Menu() {
   const [menu, setMenu] = useState(fakeMenu2)
- 
+
   return (
       <MenuStyled className="menu">
       {menu.map(({ id, title, imageSource, price }) => {

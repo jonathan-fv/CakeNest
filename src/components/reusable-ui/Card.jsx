@@ -7,20 +7,20 @@ import OrderContext from "../../context/OrderContext";
 import RemoveButton from "../reusable-ui/RemoveButton"
 import MenuContext from "../../context/MenuContext";
 import { tabsConfig } from "../pages/order/Main/MainRightSide/Admin/tabsConfig";
-
+import BasketContext from "../../context/BasketContext"
+import { formatPrice } from "../../utils/maths"
 
 export default function Card({ id, title, imageSource, leftDescription }) {
 
 const { isModeAdmin, setIsModeAdmin, currentCardId, setCardActive, isCollapsed, setIsCollapsed, currentTabSelected, setCurrentTabSelected }  = useContext(OrderContext)
 const {menu, setMenu} = useContext(MenuContext)
 const [isHover , setIsHover]  = useState(false)
-
+const {basket, setBasket} = useContext(BasketContext)
 
 const selectTab = (tabSelected) => {
   setIsCollapsed(false)
   setCurrentTabSelected(tabSelected)
 }
-
 
 const handleClick = (id) =>{
   if(isModeAdmin){
@@ -29,9 +29,41 @@ const handleClick = (id) =>{
   }
 }
 
-
 const deleteProduct = (id) => {
   setMenu([...menu.filter((item) => item.id !== id)])
+}
+
+const addProduct = () =>{
+  let currentQty = 1
+    const currentProduct = {product:{id:id, title:title, image:imageSource, price:leftDescription}, quantity:currentQty}
+    if(basket.length !== 0){
+      let isInBasket = false
+      basket.map((itemCard) => {
+        if (itemCard.product.id === currentProduct.product.id ) {
+          isInBasket = true
+          currentQty = itemCard.quantity
+        }
+      })
+      if(isInBasket) {
+        const getProductIndex = basket.findIndex(
+          (productObject) => productObject.product.id === currentProduct.product.id
+        )
+        const newCurrentProduct = {product:currentProduct.product, quantity:currentQty +1}
+        if(getProductIndex !== -1) {
+          const updateBasket = [...basket];
+          updateBasket[getProductIndex] = newCurrentProduct
+          setBasket(updateBasket);
+        }
+      } else {
+        setBasket([
+          ...basket, currentProduct
+        ])
+      }
+    } else {
+      setBasket([
+        ...basket, currentProduct
+      ])
+    }
 }
 
   return (
@@ -56,9 +88,9 @@ const deleteProduct = (id) => {
       <div className="text-info">
         <div className="title">{title}</div>
         <div className="description">
-          <div className="left-description">{leftDescription}</div>
+          <div className="left-description">{formatPrice(leftDescription)}</div>
           <div className="right-description">
-            <PrimaryButton className="primary-button" label={"Ajouter"} />
+            <PrimaryButton className="primary-button" label={"Ajouter"} onClick={addProduct} />
           </div>
         </div>
       </div>

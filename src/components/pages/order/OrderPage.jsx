@@ -6,6 +6,8 @@ import { useState } from "react"
 import OrderContext from "../../../context/OrderContext"
 import { fakeMenu2 } from "../../../fakeData/fakeMenu";
 import MenuContext from "../../../context/MenuContext";
+import BasketContext from "../../../context/BasketContext"
+import { fakeBasket } from "../../../fakeData/fakeBasket"
 
 
 export default function OrderPage() {
@@ -14,6 +16,7 @@ export default function OrderPage() {
     const [currentTabSelected, setCurrentTabSelected] = useState("add")
     const [menu, setMenu] = useState(fakeMenu2)
     const [currentCardId, setCardActive] = useState()
+    const [basket, setBasket] = useState([])
 
     const orderContextValue = {
         isModeAdmin,
@@ -31,15 +34,22 @@ export default function OrderPage() {
         setMenu
     }
 
+    const basketContextValue = {
+        basket,
+        setBasket
+    }
+
     return (
         <OrderContext.Provider value={orderContextValue}>
             <MenuContext.Provider value={menuContextValue}>
-                <OrderPageStyled>
-                <div className="container">
-                    <Navbar />
-                    <Main />
-                </div>
-                </OrderPageStyled>
+                <BasketContext.Provider value={basketContextValue}>
+                    <OrderPageStyled>
+                    <div className="container">
+                        <Navbar />
+                        <Main />
+                    </div>
+                    </OrderPageStyled>
+                </BasketContext.Provider>
             </MenuContext.Provider>
         </OrderContext.Provider>
         )
