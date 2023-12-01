@@ -82,7 +82,6 @@ function MainLeftSide() {
 
 export default MainLeftSide
 
-
 const MainLeftSideStyled = styled.div`
     display: flex;
     flex-direction: column;

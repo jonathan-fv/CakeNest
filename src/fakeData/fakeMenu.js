@@ -111,3 +111,24 @@ export const fakeMenu2 = [
     isAdvertised: false,
   },
 ]
+
+export const fakeMenu3 = [
+  {
+    id: 1,
+    imageSource: "/images/dragonCup.png",
+    title: "DrogonCake",
+    price: 9.297,
+    quantity: 0,
+    isAvailable: true,
+    isAdvertised: false,
+  },
+  {
+    id: 2,
+    imageSource: "/images/dragonCup.png",
+    title: "MogCake",
+    price: 7.556,
+    quantity: 0,
+    isAvailable: true,
+    isAdvertised: false,
+  },
+]

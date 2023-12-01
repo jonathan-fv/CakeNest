@@ -3,10 +3,16 @@ import styled from "styled-components"
 import { theme } from "../../../../../theme"
 import Card from "../../../../reusable-ui/Card"
 import MenuContext from "../../../../../context/MenuContext"
+import { getProduct } from "../../../../../api/product"
+import UserContext from "../../../../../context/UserContext"
 
 export default function Menu() {
 
+  
   const {menu, setMenu} = useContext(MenuContext)
+  const {user, setUser} = useContext(UserContext)
+
+  console.log()
   
   return (
     <MenuStyled className="menu">

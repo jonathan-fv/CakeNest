@@ -1,14 +1,16 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import styled from "styled-components"
 import { fakeMenu2 } from "../../../../fakeData/fakeMenu"
 import { theme } from "../../../../theme"
 import { formatPrice } from "../../../../utils/maths"
 import Card from "../../../reusable-ui/Card"
-import { FaChevronUp } from "react-icons/fa6";
+import { getUser } from "../../../api/user";
+
 
 
 export default function Menu() {
   const [menu, setMenu] = useState(fakeMenu2)
+  const [user, setUser] = useState(null)
 
   return (
       <MenuStyled className="menu">
