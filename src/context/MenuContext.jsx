@@ -14,5 +14,7 @@ export default createContext({
         }
     ],
 
-    setMenu: () => {}
+    setMenu: () => {
+        
+    }
 })

@@ -6,14 +6,25 @@ import TextInput from "../../reusable-ui/TextInput";
 import { BsPersonCircle } from "react-icons/bs";
 import PrimaryButton from "../../reusable-ui/PrimaryButton";
 import { theme } from "../../../theme";
+import { getUser } from "../../../api/user";
+import { getProduct } from "../../../api/product";
+import { useContext } from "react";
+import UserContext from "../../../context/UserContext";
+import MenuContext from "../../../context/MenuContext";
 
 export default function LoginForm() {
     const [inputValue, setInputValue] = useState("");
+    const {user, setUser, isLogedIn, setIsLoggedIn} = useContext(UserContext)
+
     const navigate = useNavigate();
 
+
     const handleSubmit = (e) => {
-        e.preventDefault();
-        setInputValue("");
+        e.preventDefault()
+        // getUser(inputValue)
+        // getProduct(inputValue)
+        
+        setInputValue("")
         navigate(`/order/${inputValue}`);
     };
 

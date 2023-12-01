@@ -2,9 +2,36 @@ import { BsPersonCircle } from "react-icons/bs"
 import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
 import { theme } from "../../../../theme"
+import { useEffect } from "react"
+import { useContext } from "react"
+import UserContext from "../../../../context/UserContext"
+import { doc, getDoc } from "firebase/firestore"
+import {db} from "../../../../api/firebase-config"
 
 export default function Profile() {
+  const { user, setUser } = useContext(UserContext)
   const { username } = useParams()
+
+  // const getUserInfo = async (userName) => {
+  //   const docRef = doc(db, "users", userName)
+
+  //   // check if user exist
+  //   const checkUser = await getDoc(docRef)
+
+  //   // return user info
+  //   const userInfo = await getDoc(docRef).then((querySnapshot) => {
+  //       return querySnapshot.data()
+  //   })
+
+  //   if (checkUser.exists()) {
+  //       setUser(userInfo)
+  //       //console.log(userInfo)
+  //       return userInfo
+  //   } else {
+  //       console.log("user " + userName + " doesn't exist")
+  //       return
+  //   }
+  // }
 
   return (
     <ProfileStyled>
@@ -19,7 +46,10 @@ export default function Profile() {
         </Link>
       </div>
       <div className="picture">
+      <Link to={`/profil/${username}`}>
         <BsPersonCircle />
+      </Link>
+        
       </div>
     </ProfileStyled>
   )
